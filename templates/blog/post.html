@@ -11,9 +11,16 @@
         {% for post in posts %}
         <div class="post">
             <h1 class="title"> {{ post.title }} </h1>
-            <p class="content"> {{ post.content }} </p>
+            <div class="content">
+                <p class="text"> {{ post.content }} </p>
+                <img class="img_post" src="{{ post.photo.url }}" alt="">
+            </div>
+            <div class="content">
+            {% if post.published_recently  %}
+            <p>published recently</p>
+            {% endif %}
             <p class="date"> {{ post.published_date }} </p>
-            <img src="{{ post.photo }}" alt="">
+            </div>
         </div>
         {% endfor %}
         
@@ -23,7 +30,8 @@
 
 <style>
     .post{
-        margin: 10%;
+        box-shadow: 0px 5px 10px gray;
+        margin: 2.5% 5% 1.5% 10%;
         padding: 2.5% 5% 1.5% 10%;
         border: solid;
         border-width: 0.5px;
@@ -33,9 +41,19 @@
         margin-left: -5%;
     }
     .content{
+        display: flex;
+    }
+    .text{
+        width: 800px;
         font-size: 25px;
     }
-    .date{
-        margin-left: 85%;
+    .img_post{
+        margin-left: 30%;
+        width: 500px;
+        height: 500px;
     }
+    .date{
+        margin-left: 75%;
+    }
+    
 </style>
