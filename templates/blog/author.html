@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ author }}'s post</title>
+</head>
+<body>
+    <div class="header">
+        <h1>All posts from <span class="author_name">{{ author.name }}</span> </h1>
+        <a href="http://127.0.0.1:8000/posts/" class="back_btn">Too all posts</a>
+    </div>
+    <div class="all_posts">
+        {% for post in posts %}
+            {% if post.author == author %}
+            <div class="post">
+                <h2 class="title"> {{ post.title }} </h1>
+                <img class="img_post" src="{{ post.photo.url }}" alt="">
+                <div class="content">
+                    <p class="text"> {{ post.content }} </p>
+                    
+                </div>
+                <div class="content">
+                {% if post.published_recently  %}
+                <p>published recently</p>
+                {% endif %}
+                <p class="date"> {{ post.published_date }} </p>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    
+</body>
+</html>
+
+<style>
+    .header {
+        margin-top: -0.5%;
+        margin-left: -0.5%;
+        background-color: #ffffff;
+        width: 101%;
+        height: 100px;
+        position: fixed;
+        display: flex;
+        justify-content: center;
+    }
+    h1{
+        text-align: center;
+        margin-right: 10%;
+    }
+    .back_btn{
+        margin-top:0.9%;
+        text-decoration: none;
+        padding: 1.1% 1% 1% 1%;
+        height: 25%;
+        border: solid;
+        background-color: transparent;
+        border-width: 0.5px;
+        border-radius: 10px
+    }
+    .back_btn:hover{
+        color: white;
+        background-color: rgb(56, 51, 118);
+        transition: 1s;
+    }
+    .author_name{
+        color: rgb(69, 69, 127);
+        font-family: bold;
+    }
+    
+    
+    .all_posts{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: center;
+        margin-bottom: 5%;
+    }
+    .post{
+        width: 500px;
+        height: 700px;
+        box-shadow: 0px 5px 10px gray;
+        margin: 5% 5% 0% 5%;
+        padding: 1.5% 3% 1.5% 3%;
+        border: solid;
+        border-width: 0.5px;
+        border-radius: 10px;
+    }
+    .content{
+        display: flex;
+    }
+    .text{
+        width: 500px;
+        height: 255px;
+        font-size: 25px;
+    }
+    .img_post{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        height: 255px;
+    }
+    .date{
+        margin-left: 45%;
+    }
+    
+    
+</style>

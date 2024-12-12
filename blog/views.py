@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Post
+from .models import Post, Author
 
 # Create your views here.
 def post_show(request):
@@ -13,9 +13,30 @@ def post_show(request):
 
     return render(
         request,
-        "blog\post.html",
+        "blog/post.html",
         context = context,
     )
 
+def author_show(request , id):
+    authors = Author.objects.all()
+    for i in authors:
+        if i.id == id:
+            author = authors[id-1]
 
-    
+    posts = Post.objects.all()
+    context = {
+        "author": author,
+        "posts": posts,
+        }
+
+    return render(
+        request,
+        "blog/author.html",
+        context = context,
+    )
+
+def basic_page(request):
+    return render(
+        request,
+        "blog/basic.html",
+    )

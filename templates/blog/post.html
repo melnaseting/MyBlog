@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posts</title>
 </head>
-<body>
-    <div>
-        
-        {% for post in posts %}
-        <div class="post">
-            <h1 class="title"> {{ post.title }} </h1>
+<body> 
+    <h1>All posts</h1>    
+    {% for post in posts %}
+    <div class="post">
+        <div class="container_post">
+            <a href="author/{{ post.author.id }}" class="author_name"> {{ post.author }} </a>
+            <h2 class="title"> {{ post.title }} </h1>
             <div class="content">
                 <p class="text"> {{ post.content }} </p>
                 <img class="img_post" src="{{ post.photo.url }}" alt="">
@@ -22,23 +23,50 @@
             <p class="date"> {{ post.published_date }} </p>
             </div>
         </div>
-        {% endfor %}
-        
+        <div class="coments">
+            <h3>coments</h3>  
+            <ul>
+                {% for coment in post.comment.all %}
+                <li><a class="author_com" href="author/{{ coment.author.id }}"><b > {{ coment.author }} </b></a>: {{ coment.text }} </li>
+                {% endfor %}
+            </ul>
+            <form action="">
+                <input class="input_com" type="text" maxlength="200">
+                <button class="send_com" type="submit">Відправити</button>
+            </form>
+        </div>  
     </div>
+    
+    {% endfor %}
+        
 </body>
 </html>
 
 <style>
+    h1{
+        text-align: center;
+        margin:5% 0 5% 0 ;
+    }
     .post{
         box-shadow: 0px 5px 10px gray;
         margin: 2.5% 5% 1.5% 10%;
-        padding: 2.5% 5% 1.5% 10%;
         border: solid;
         border-width: 0.5px;
         border-radius: 10px;
     }
+    .container_post{
+        margin:3% 10% 2% 12.5%; ;
+    }
+    .author_name{
+        font-size: 45px;
+        text-decoration: none;
+        margin-top: -1.5%;
+        margin-left: -10%;
+        font-style: oblique;
+        color: rgb(75, 75, 140);
+    }
     .title{
-        margin-left: -5%;
+        margin-left: -10%;
     }
     .content{
         display: flex;
@@ -55,5 +83,44 @@
     .date{
         margin-left: 75%;
     }
-    
+    .coments{
+        padding:0.5% 2.5% 1.5% 2.5%;
+        border-radius: 0 0 10px 10px   ;
+        width: 95%;
+        height: 100%;
+        background-color: #cecdcd;
+    }
+    h3{
+        color: rgb(78, 80, 75);
+    }
+    ul {
+        list-style-type: none;
+    }
+    li{
+        color: rgb(49, 49, 47);
+        margin-top: 1%;
+    }
+    .author_com{
+        text-decoration: none;
+        color: rgb(84, 76, 128);
+        font-size: 125%;
+    }
+    .input_com{
+        width: 90%;
+        height: 30px;
+        font-size: 20px;
+    }
+    .send_com{
+        padding: 0.5%;
+        margin-left:1%;
+        border: solid;
+        background-color: transparent;
+        border-width: 0.5px;
+        border-radius: 10px
+    }
+    .send_com:hover{
+        color: white;
+        background-color: rgb(56, 51, 118);
+        transition: 1s;
+    }
 </style>
