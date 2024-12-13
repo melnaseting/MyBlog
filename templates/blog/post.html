@@ -26,13 +26,18 @@
         <div class="coments">
             <h3>coments</h3>  
             <ul>
-                {% for coment in post.comment.all %}
-                <li><a class="author_com" href="author/{{ coment.author.id }}"><b > {{ coment.author }} </b></a>: {{ coment.text }} </li>
+                {% for comment in comments %}
+                {% if post.id == comment.post_id %}
+                <li><a class="author_com" href="author/{{ coment.author.id }}"><b > {{ comment.author }} </b></a>: {{ comment.text }} </li>
+                {% endif %}
                 {% endfor %}
             </ul>
-            <form action="">
-                <input class="input_com" type="text" maxlength="200">
-                <button class="send_com" type="submit">Відправити</button>
+            <form method="post" action="/posts/">
+                {% csrf_token %}
+                {% for field in form %}
+                {{ field }}
+                {% endfor %}
+                <button name="sub_btn" class="send_com" type="submit">Відправити</button>
             </form>
         </div>  
     </div>

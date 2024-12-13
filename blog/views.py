@@ -1,14 +1,25 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Post, Author
+from .models import Post, Author , Comment
+from blog.forms import CommentForm
 
 # Create your views here.
 def post_show(request):
     posts = Post.objects.all()
+    coments = Comment.objects.all()
+    form = CommentForm()
     
+    if request.method == 'POST':
+        if 'sub_btn' in request.POST :
+            form = CommentForm(request.POST)
+            pk = request.POST.get('sub_btn')
+            
+            form.save()
 
     context = {
         "posts": posts,
+        "comment":coments,
+        "form": form,
         }
 
     return render(

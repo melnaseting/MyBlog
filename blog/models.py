@@ -16,13 +16,6 @@ class Author(models.Model):
     def __str__(self) -> str:
         return self.name
 
-class Comment(models.Model):
-    text = models.CharField(max_length=200)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, blank=True)
-    def __str__(self) -> str:
-        return self.text
-
-
 class Post(models.Model):
     def published_recently(self):
         return now()- self.published_date <= timedelta(days=7)
@@ -32,11 +25,26 @@ class Post(models.Model):
     published_date = models.DateTimeField()
     photo = models.ImageField(upload_to='media/', height_field=None, width_field=None, max_length=100)
     author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, blank=True)
-    comment = models.ManyToManyField(Comment)
+    
 
     def __str__(self) -> str:
         return f"{self.title} , {self.published_date}"
+
+class Comment(models.Model):
+    text = models.CharField(max_length=200)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, blank=True)
+    post = models.ForeignKey(Post , on_delete=models.CASCADE, null=True, blank=True)
     
+    def __str__(self) -> str:
+        return self.text
+
+
+
+    
+    """
+    comment = models.ManyToManyField(Comment)
+
+
     def add_comment(post_id, author , comment_text):
         cursor.execute(f"INSERT INTO blog_coment (author, text) VALUES ({author}, {comment_text})")
         cursor.execute("SELECT * FROM blog_coment WHERE id=(SELECT max(id) FROM blog_coment)")
@@ -45,7 +53,7 @@ class Post(models.Model):
             for i in el:
                 coment_id = i
         cursor.execute(f"INSERT INTO blog_post_coment (post_id, comment_id) VALUES ({post_id}, {coment_id})")
-        conn.commit()
+        conn.commit()"""
     
     
    
